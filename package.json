@@ -1,0 +1,36 @@
+{
+  "name": "mongoosehelper",
+  "license": "UNLICENSED",
+  "version": "1.0.0",
+  "description": "",
+  "engines": {
+    "node": "^8.1.4"
+  },
+  "homepage": "https://github.com/invisible-tech/mongooseHelper#readme",
+  "author": {
+    "name": "Invisible Technologies",
+    "email": "tng@invisible.email",
+    "url": "https://gihub.com/invisible-tech"
+  },
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint --cache -f node_modules/eslint-formatter-pretty scripts src test",
+    "pretest": "yarn run lint",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "assert": "^1.4.1",
+    "common-tags": "^1.4.0",
+    "lodash": "^4.17.4",
+    "lodash-fp": "^0.10.4",
+    "mongoose": "^4.11.3",
+    "mongoose-unique-validator": "^1.0.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@https://github.com/invisible-tech/mongooseHelper.git"
+  },
+  "bugs": {
+    "url": "https://github.com/invisible-tech/mongooseHelper/issues"
+  }
+}

@@ -12,23 +12,11 @@ const {
   mapValues,
 } = require('lodash/fp')
 
-const { exportForTest } = require('./utility')
-
-const ERROR_NO_OBJECT_ID = 'Argument is not a mongoose instance'
-
 const forEachValueKey = forEach.convert({ cap: false })
 const getId = get('_id')
 const getIds = map(getId)
 const isObjectId = a => (a instanceof mongoose.Types.ObjectId)
 const pickIds = mapValues(v => getId(v))
-
-const getObjectIdFrom = instance => {
-  if (isObjectId(instance)) return instance
-  if (isObjectId(getId(instance))) return getId(instance)
-  throw Error(stripIndents`
-    getObjectIdFrom: ${ERROR_NO_OBJECT_ID}
-    ${JSON.stringify(instance)}`)
-}
 
 function isSameObjectId(a, b) {
   assert(isObjectId(a), '1st argument is not an ObjectId')
@@ -50,35 +38,8 @@ function assertInstance(input, model) {
   catch (e) { throw Error(`no such model as ${modelName}`) }
   const errMsg = stripIndents`
     Expected an instance of ${modelName} but got this:
-    ${JSON.stringify(input, undefined, 2)}`
-  assert(input instanceof model, errMsg)
-}
-
-/**
- * Adds indexes to a given Mongoose Schema
- * @method addIndexes
- * @param {Schema} options.schema - The Schema to which we are adding indexes
- * @param {Object[]} options.indexes - An array of objects that follows
- *   Mongoose's index format, like [ { a: 1 }, { b: -1} ]
- * @return {undefined} - Mutates the schema directly
- */
-const addIndexes = ({ schema, indexes }) => {
-  forEachValueKey((value, key) => schema.index({ value: key }))(indexes)
-}
-
-/**
- * Adds unique indexes to a given Mongoose Schema. Also adds the uniqueness validator
- *   which adds a pre-save hook to enforce uniqueness.
- * @method addIndexes
- * @param {Schema} options.schema - The Schema to which we are adding indexes
- * @param {Object[]} options.uniqueIndexes - An array of objects that follows
- *   Mongoose's index format, like [ { a: 1 }, { b: -1} ]
- * @return {undefined} - Mutates the schema directly
- */
-const addUniqueIndexes = ({ schema, uniqueIndexes }) => {
-  forEachValueKey((value, key) =>
-    schema.index({ value: key }, { unique: true }))(uniqueIndexes)
-  schema.plugin(uniqueValidator)
+    ${JSON.stringify(instance, undefined, 2)}`
+  assert(instance instanceof model, errMsg)
 }
 
 /**
@@ -108,14 +69,11 @@ const applyAllHooks = ({ schema, hooks }) => {
 }
 
 module.exports = {
-  addIndexes,
-  addUniqueIndexes,
   addVirtualGetters,
   applyAllHooks,
   assertInstance,
   getId,
   getIds,
-  getObjectIdFrom,
   hookAllMethods,
   isObjectId,
   isSameObjectId,

@@ -2,7 +2,6 @@
 
 const assert = require('assert')
 const mongoose = require('mongoose')
-const uniqueValidator = require('mongoose-unique-validator')
 
 const { stripIndents } = require('common-tags')
 const {
@@ -27,12 +26,12 @@ function isSameObjectId(a, b) {
 /**
  * Throws if a given object is not an instance of given model
  * @method assertInstance
- * @param {Mixed} input - Could be anything, but most likely a mongoose Model
+ * @param {Mixed} instance - Could be anything, but most likely a mongoose Model
  * @param {Model} model - The Model from Mongoose (see mongoose.model('User'))
  * @return {undefined}
  * @throws {Error} - Throws if input is not an instance of model, or if model doesn't exist
  */
-function assertInstance(input, model) {
+function assertInstance(instance, model) {
   const modelName = get('modelName')(model)
   try { mongoose.model(modelName) }
   catch (e) { throw Error(`no such model as ${modelName}`) }
@@ -79,7 +78,3 @@ module.exports = {
   isSameObjectId,
   pickIds,
 }
-
-exportForTest(module, {
-  ERROR_NO_OBJECT_ID,
-})

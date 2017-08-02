@@ -91,7 +91,7 @@ describe('mongooseHelper', () => {
 
   describe('assertInstance', () => {
     it('should throw if not an instance', () => {
-      assert.throws(() => assertInstance(123, DummyModel), Error)
+      assert.throws(() => assertInstance(123, DummyModel))
     })
 
     it('should not throw if is an instance', () => {

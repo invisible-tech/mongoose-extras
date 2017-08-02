@@ -31,7 +31,6 @@
     "url": "https://github.com/invisible-tech/mongooseHelper/issues"
   },
   "devDependencies": {
-    "chance": "^1.0.10",
     "eslint": "^4.3.0",
     "eslint-config-airbnb": "^15.1.0",
     "eslint-plugin-import": "^2.7.0",

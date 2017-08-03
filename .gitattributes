@@ -1,0 +1,4 @@
+* text=auto
+*.test.json binary
+*.csv -diff -merge binary
+yarn.lock linguist-generated=true

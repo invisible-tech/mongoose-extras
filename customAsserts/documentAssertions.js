@@ -13,8 +13,8 @@ const {
 } = require('lodash/fp')
 
 const { isObjectId } = require('../index.js')
-const { prettyJson } = require('~/src/helpers/utility')
 
+const prettyJson = obj => JSON.stringify(obj, null, 2)
 const isDefined = negate(isUndefined)
 
 const stringifyObjectId = o => {

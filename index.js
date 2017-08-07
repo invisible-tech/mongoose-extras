@@ -11,6 +11,20 @@ const {
   mapValues,
 } = require('lodash/fp')
 
+const {
+  assertNotSameObjectId,
+  assertSameDocument,
+  assertSameDocumentArray,
+  assertSameDocumentIdArray,
+  assertSameObjectId,
+  assertSameObjectIdArray,
+} = require('./customAsserts/documentAssertions.js')
+
+const {
+  clearCollections,
+  clearIndexes,
+} = require('./helpers/clearCollections.js')
+
 const forEachValueKey = forEach.convert({ cap: false })
 const getId = get('_id')
 const getIds = map(getId)
@@ -70,7 +84,15 @@ const applyAllHooks = ({ schema, hooks }) => {
 module.exports = {
   addVirtualGetters,
   applyAllHooks,
+  assertNotSameObjectId,
+  assertSameDocument,
+  assertSameDocumentArray,
+  assertSameDocumentIdArray,
+  assertSameObjectId,
+  assertSameObjectIdArray,
   assertInstance,
+  clearCollections,
+  clearIndexes,
   getId,
   getIds,
   hookAllMethods,

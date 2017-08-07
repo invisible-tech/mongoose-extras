@@ -21,7 +21,8 @@
   "dependencies": {
     "common-tags": "^1.4.0",
     "lodash": "^4.17.4",
-    "mongoose": "^4.11.5"
+    "mongoose": "^4.11.5",
+    "retry": "^0.10.1"
   },
   "repository": {
     "type": "git",

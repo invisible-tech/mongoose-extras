@@ -102,6 +102,26 @@ const assertSameDocumentArray = (actual, expected, msg) => {
   }
 }
 
+// https://nodejs.org/api/assert.html#assert_assert_throws_block_error_message
+/**
+ * Custom assert that does an exact match of the error message thrown.
+ * Existing assert.throws takes in a regex to match, which might cause unexpected results
+ * @method assertThrows
+ * @param {Function} fn - The block you want to execute to test, takes no args
+ * @param {String} expectedErrMsg - The expected error message
+ * @param {String} msg - (Optional) A message you'd like to show if the assert fails
+ * @return {undefined}
+ */
+const assertThrows = (fn, expectedErrMsg, msg) => {
+  try {
+    fn()
+  } catch (err) {
+    assert.strictEqual(err.message, expectedErrMsg, msg)
+    return
+  }
+  throw Error('assertThrows: didn\'t throw')
+}
+
 module.exports = {
   assertNotSameObjectId,
   assertSameDocument,
@@ -109,4 +129,5 @@ module.exports = {
   assertSameDocumentIdArray,
   assertSameObjectId,
   assertSameObjectIdArray,
+  assertThrows,
 }

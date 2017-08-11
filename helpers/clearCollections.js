@@ -35,13 +35,13 @@ const retryPromise = fn => {
   })
 }
 
-const clearAllIndexes = async () => { // eslint-disable-line space-before-function-paren
+const clearAllIndexes = async () => {
   const deleteIndexes = collection => promisify(collection.dropIndexes.bind(collection))()
   const collections = getCollections()
   await Promise.all(map(deleteIndexes)(collections))
 }
 
-const clearAllCollections = async () => { // eslint-disable-line space-before-function-paren
+const clearAllCollections = async () => {
   const deleteCollection = c => c.deleteMany({}, { w: 1 })
   const collections = getCollections()
   await Promise.all(map(deleteCollection)(collections))

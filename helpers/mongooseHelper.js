@@ -33,8 +33,11 @@ function isSameObjectId(a, b) {
  */
 function assertInstance(instance, model) {
   const modelName = get('modelName')(model)
-  try { mongoose.model(modelName) }
-  catch (e) { throw Error(`no such model as ${modelName}`) }
+  try {
+    mongoose.model(modelName)
+  } catch (e) {
+    throw Error(`no such model as ${modelName}`)
+  }
   const errMsg = stripIndents`
     Expected an instance of ${modelName} but got this:
     ${JSON.stringify(instance, undefined, 2)}`

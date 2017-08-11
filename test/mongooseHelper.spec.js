@@ -9,7 +9,7 @@ const {
   pickIds,
   isObjectId,
   isSameObjectId,
-} = require('../index.js')
+} = require('../helpers/mongooseHelper.js')
 
 const { Schema } = mongoose
 const { ObjectId } = mongoose.Types

@@ -13,12 +13,13 @@
     "promise"
   ],
   "parserOptions": {
-    "sourceType": "script"
+    "sourceType": "script",
+    "ecmaVersion": 8
   },
   "rules": {
     "array-bracket-spacing": "off",
     "arrow-parens": ["error", "as-needed", { "requireForBlockBody": false }],
-    "brace-style": "off",
+    "brace-style": ["error", "1tbs", { "allowSingleLine": true }],
     "consistent-return": "off",
     "comma-dangle": ["error", {
       "arrays": "always-multiline",
@@ -37,7 +38,6 @@
     "max-len": "off",
     "newline-per-chained-call": "off",
     "no-continue": "off",
-    "no-else-return": "off",
     "no-multiple-empty-lines": "off",
     "no-param-reassign": ["error", {"props": false}],
     "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
@@ -54,8 +54,20 @@
     "promise/param-names": "error",
     "require-yield": "off",
     "semi": ["error", "never"],
-    "space-before-function-paren": [ "error", "never" ],
+    "space-before-function-paren": ["error", {
+      "anonymous": "never",
+      "named": "never",
+      "asyncArrow": "always"
+    }],
     "space-in-parens": "off",
+    "space-unary-ops": ["error", {
+      "words": true,
+      "nonwords": false,
+      "overrides": {
+        "!": true
+      }
+    }],
+    "strict": ["error", "global"],
     "valid-jsdoc": "error"
   },
   "settings": {

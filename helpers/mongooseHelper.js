@@ -2,6 +2,7 @@
 
 const assert = require('assert')
 const mongoose = require('mongoose')
+const uniqueValidator = require('mongoose-unique-validator')
 
 const { stripIndents } = require('common-tags')
 const {
@@ -45,6 +46,32 @@ function assertInstance(instance, model) {
 }
 
 /**
+ * Adds indexes to a given Mongoose Schema
+ * @method addIndexes
+ * @param {Schema} options.schema - The Schema to which we are adding indexes
+ * @param {Object[]} options.indexes - An array of objects that follows
+ *   Mongoose's index format, like [ { a: 1 }, { b: -1} ]
+ * @return {undefined} - Mutates the schema directly
+ */
+const addIndexes = ({ schema, indexes }) => {
+  forEach(index => schema.index(index))(indexes)
+}
+
+/**
+ * Adds unique indexes to a given Mongoose Schema. Also adds the uniqueness validator
+ *   which adds a pre-save hook to enforce uniqueness.
+ * @method addIndexes
+ * @param {Schema} options.schema - The Schema to which we are adding indexes
+ * @param {Object[]} options.uniqueIndexes - An array of objects that follows
+ *   Mongoose's index format, like [ { a: 1 }, { b: -1} ]
+ * @return {undefined} - Mutates the schema directly
+ */
+const addUniqueIndexes = ({ schema, uniqueIndexes }) => {
+  forEach(index => schema.index(index, { unique: true }))(uniqueIndexes)
+  schema.plugin(uniqueValidator)
+}
+
+/**
  * Adds virtuals (getters only) to a given Mongoose Schema
  * @method addVirtualGetters
  * @param {Schema} options.schema - The Schema to which we are adding virtuals
@@ -70,7 +97,26 @@ const applyAllHooks = ({ schema, hooks }) => {
   forEach(hook => hookAllMethods({ schema, hook }))(hooks)
 }
 
+/**
+ * Creates a model with the given name and schema, or returns it if it already exists
+ * @method upsertModel
+ * @param {String} options.name - the name of the model, like Client
+ * @param {Schema} options.schema - the Mongoose Schema for the model
+ * @return {Model} - the Mongoose Model
+ */
+const upsertModel = ({ name, schema }) => {
+  assert(name, 'Model name not given')
+  try {
+    return mongoose.model(name)
+  } catch (e) {
+    assert(schema, `Model schema not given for ${name}`)
+    return mongoose.model(name, schema)
+  }
+}
+
 module.exports = {
+  addIndexes,
+  addUniqueIndexes,
   addVirtualGetters,
   applyAllHooks,
   assertInstance,
@@ -80,4 +126,5 @@ module.exports = {
   isObjectId,
   isSameObjectId,
   pickIds,
+  upsertModel,
 }

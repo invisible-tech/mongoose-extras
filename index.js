@@ -24,6 +24,7 @@ const {
   isObjectId,
   isSameObjectId,
   pickIds,
+  upsertModel,
 } = require('./helpers/mongooseHelper.js')
 
 module.exports = {
@@ -44,4 +45,5 @@ module.exports = {
   isObjectId,
   isSameObjectId,
   pickIds,
+  upsertModel,
 }

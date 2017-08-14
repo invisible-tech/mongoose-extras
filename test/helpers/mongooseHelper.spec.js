@@ -4,16 +4,29 @@ const assert = require('assert')
 const mongoose = require('mongoose')
 
 const {
+  forEach,
+  get,
+  head,
+  last,
+  map,
+} = require('lodash/fp')
+
+const {
+  addIndexes,
+  addUniqueIndexes,
   addVirtualGetters,
   assertInstance,
   pickIds,
   isObjectId,
   isSameObjectId,
-} = require('../helpers/mongooseHelper.js')
+  upsertModel,
+} = require('../../helpers/mongooseHelper')
 
 const { Schema } = mongoose
 const { ObjectId } = mongoose.Types
 const { Mixed } = Schema.Types
+
+const forEachValueKey = forEach.convert({ cap: false })
 
 describe('mongooseHelper', () => {
   const modelSchema = new Schema({})
@@ -59,6 +72,42 @@ describe('mongooseHelper', () => {
     })
   })
 
+  describe('addIndexes', () => {
+    it('should add indexes', async () => {
+      const schema = new Schema({})
+      const indexes = [
+        { a: 1 },
+        { b: -1 },
+        { d: 1 },
+      ]
+
+      addIndexes({ schema, indexes })
+
+      const actualIndexes = map(head)(schema.indexes())
+      assert.deepStrictEqual(actualIndexes, indexes)
+    })
+  })
+
+  describe('addUniqueIndexes', () => {
+    it('should add unique indexes', async () => {
+      const uniqueIndexes = [
+        { a: 1, b: -1 },
+        { b: 1, d: -1 },
+      ]
+
+      addUniqueIndexes({ schema: modelSchema, uniqueIndexes })
+
+      const actualIndexes = modelSchema.indexes()
+      forEachValueKey((v, k) => {
+        const index = head(v)
+        const attributes = last(v)
+        const { unique } = attributes
+        assert.deepStrictEqual(uniqueIndexes[k], index)
+        assert.strictEqual(true, unique)
+      })(actualIndexes)
+    })
+  })
+
   describe('addVirtualGetters', () => {
     afterEach(() => { delete mongoose.connection.models.Dummy })
 
@@ -98,6 +147,26 @@ describe('mongooseHelper', () => {
       const instance = new DummyModel()
 
       assertInstance(instance, DummyModel)
+    })
+  })
+
+  describe('upsertModel', () => {
+    it('should create the model if it doesn\'t exist', async () => {
+      const name = 'testModel'
+      const model = upsertModel({ name, schema: modelSchema })
+      const modelName = get('modelName')(model)
+      assert.strictEqual(modelName, name)
+      assert(mongoose.model(modelName)) // this throws if the model doesn't exist
+    })
+
+    it('should return an existing model', async () => {
+      const name = 'testModel'
+      const model = upsertModel({ name, schema: modelSchema })
+      const model2 = upsertModel({ name, schema: modelSchema })
+      const modelName = get('modelName')(model2)
+      assert.strictEqual(modelName, name)
+      assert(mongoose.model(modelName)) // this throws if the model doesn't exist
+      assert.deepStrictEqual(model, model2)
     })
   })
 })

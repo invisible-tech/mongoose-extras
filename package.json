@@ -1,6 +1,6 @@
 {
   "name": "@invisible/mongoose-extras",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "version": "1.0.0",
   "description": "",
   "engines": {

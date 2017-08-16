@@ -1,12 +1,12 @@
 {
-  "name": "mongoosehelper",
-  "license": "UNLICENSED",
+  "name": "@invisible/mongoose-extras",
+  "license": "MIT",
   "version": "1.0.0",
   "description": "",
   "engines": {
     "node": "^8.1.4"
   },
-  "homepage": "https://github.com/invisible-tech/mongooseHelper#readme",
+  "homepage": "https://github.com/invisible-tech/mongoose-extras#readme",
   "author": {
     "name": "Invisible Technologies",
     "email": "tng@invisible.email",
@@ -14,22 +14,23 @@
   },
   "main": "index.js",
   "scripts": {
-    "lint": "eslint .",
+    "lint": "eslint . --ignore-path .gitignore",
     "pretest": "yarn run lint",
-    "test": "mocha test"
+    "test": "mocha $(find test -name '*.spec.js')"
   },
   "dependencies": {
     "common-tags": "^1.4.0",
     "lodash": "^4.17.4",
     "mongoose": "^4.11.5",
+    "mongoose-unique-validator": "^1.0.5",
     "retry": "^0.10.1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/invisible-tech/mongooseHelper.git"
+    "url": "git+https://github.com/invisible-tech/mongoose-extras.git"
   },
   "bugs": {
-    "url": "https://github.com/invisible-tech/mongooseHelper/issues"
+    "url": "https://github.com/invisible-tech/mongoose-extras/issues"
   },
   "devDependencies": {
     "eslint": "^4.3.0",

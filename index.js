@@ -15,6 +15,8 @@ const {
 } = require('./helpers/clearCollections.js')
 
 const {
+  addIndexes,
+  addUniqueIndexes,
   addVirtualGetters,
   applyAllHooks,
   assertInstance,
@@ -28,6 +30,8 @@ const {
 } = require('./helpers/mongooseHelper.js')
 
 module.exports = {
+  addIndexes,
+  addUniqueIndexes,
   addVirtualGetters,
   applyAllHooks,
   assertNotSameObjectId,

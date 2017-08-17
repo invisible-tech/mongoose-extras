@@ -1,5 +1,7 @@
 'use strict'
 
+require('dotenv').config({ path: `${__dirname}/.env` })
+
 const {
   assertNotSameObjectId,
   assertSameDocument,
@@ -29,6 +31,13 @@ const {
   upsertModel,
 } = require('./helpers/mongooseHelper.js')
 
+const {
+  DB,
+  dbShutdown,
+  getConnection,
+  init,
+} = require('./config')
+
 module.exports = {
   addIndexes,
   addUniqueIndexes,
@@ -43,9 +52,13 @@ module.exports = {
   assertInstance,
   clearCollections,
   clearIndexes,
+  DB,
+  dbShutdown,
+  getConnection,
   getId,
   getIds,
   hookAllMethods,
+  init,
   isObjectId,
   isSameObjectId,
   pickIds,

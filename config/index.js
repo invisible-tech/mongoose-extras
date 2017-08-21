@@ -9,17 +9,10 @@ const {
 
 const logger = require('@invisible/logger')
 
-logger.info('Please, make sure to add mongoose env vars to your project .env')
-const mongodbUri = (process.env.NODE_ENV === 'test')
-  ? process.env.MONGO_TEST_CONNECTION_STRING
-  : process.env.MONGO_CONNECTION_STRING
-
-if (! mongodbUri) throw new Error(`mongodbUri '${mongodbUri}' is invalid`)
-
 // use native promises
 mongoose.Promise = global.Promise
 
-let DB
+let dbConnection
 
 const handleErr = err => {
   const isConnRefused = flow(get('message'), startsWith('connect ECONNREFUSED'))
@@ -47,28 +40,32 @@ const defaultOptions = {
 const assignMongooseOptions = opts => Object.assign(defaultOptions, opts)
 
 let initialized = false
-const init = (opts = {}) => {
+const initConnection = (opts = {}) => {
+  const mongodbUri = (process.env.NODE_ENV === 'test')
+    ? process.env.MONGO_TEST_CONNECTION_STRING
+    : process.env.MONGO_CONNECTION_STRING
+  if (! mongodbUri) throw new Error(`mongodbUri '${mongodbUri}' is invalid`)
   if (initialized) return
   initialized = true
   const mongooseOptions = assignMongooseOptions(opts)
   mongoose.connect(mongodbUri, mongooseOptions)
-  DB = mongoose.connection
-  DB.on('error', handleErr)
-  DB.on('open', () => { resolveConnection(DB) })
+  dbConnection = mongoose.connection
+  dbConnection.on('error', handleErr)
+  dbConnection.on('open', () => { resolveConnection(dbConnection) })
 }
 
 const dbShutdown = cb => {
   logger.info('Shutting down db connection')
   // This may be a sudden termination and not wait for all saves to finish
-  DB.close(err => {
+  dbConnection.close(err => {
     logger.error(err)
     mongoose.disconnect(cb)
   })
 }
 
 module.exports = {
-  DB,
+  dbConnection,
   dbShutdown,
   getConnection,
-  init,
+  initConnection,
 }

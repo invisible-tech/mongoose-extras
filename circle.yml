@@ -11,8 +11,11 @@ machine:
     NODE_ENV: test
     PORT: 3000
 
+    MONGO_CONNECTION_STRING: mongodb://localhost:27017/dummy
+    MONGO_TEST_CONNECTION_STRING: mongodb://localhost:27017/dummy-test
+
   node:
-    version: "8.1.2"
+    version: "8.1.4"
 
   timezone: America/Los_Angeles
 

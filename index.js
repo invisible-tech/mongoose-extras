@@ -29,6 +29,13 @@ const {
   upsertModel,
 } = require('./helpers/mongooseHelper.js')
 
+const {
+  dbConnection,
+  dbShutdown,
+  getConnection,
+  initConnection,
+} = require('./config')
+
 module.exports = {
   addIndexes,
   addUniqueIndexes,
@@ -43,9 +50,13 @@ module.exports = {
   assertInstance,
   clearCollections,
   clearIndexes,
+  dbConnection,
+  dbShutdown,
+  getConnection,
   getId,
   getIds,
   hookAllMethods,
+  initConnection,
   isObjectId,
   isSameObjectId,
   pickIds,

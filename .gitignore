@@ -10,3 +10,10 @@ ignore
 # eslint cache
 .eslint-cache
 .eslintcache
+
+# nyc shiz
+.nyc_output
+coverage
+
+# .env
+.env

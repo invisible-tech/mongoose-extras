@@ -52,15 +52,19 @@ const initConnection = (opts = {}) => {
   dbConnection = mongoose.connection
   dbConnection.on('error', handleErr)
   dbConnection.on('open', () => { resolveConnection(dbConnection) })
+  dbConnection.on('disconnecting', () => logger.info('disconnecting mongodb...'))
+  dbConnection.on('disconnected', () => logger.info('mongodb connection successfully disconnected.'))
 }
 
-const dbShutdown = cb => {
+const dbShutdown = async cb => {
   logger.info('Shutting down db connection')
   // This may be a sudden termination and not wait for all saves to finish
-  dbConnection.close(err => {
+  try {
+    await dbConnection.close()
+  } catch (err) {
     logger.error(err)
     mongoose.disconnect(cb)
-  })
+  }
 }
 
 module.exports = {

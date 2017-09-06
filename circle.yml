@@ -17,7 +17,7 @@ machine:
     MONGO_TEST_CONNECTION_STRING: mongodb://localhost:27017/dummy-test
 
   node:
-    version: "8.1.4"
+    version: "8.4.0"
 
   timezone: America/Los_Angeles
 

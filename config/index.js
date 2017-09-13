@@ -40,7 +40,7 @@ const defaultOptions = {
 const assignMongooseOptions = opts => Object.assign(defaultOptions, opts)
 
 let initialized = false
-const initConnection = (opts = {}) => {
+const initConnection = async (opts = {}) => {
   const mongodbUri = (process.env.NODE_ENV === 'test')
     ? process.env.MONGO_TEST_CONNECTION_STRING
     : process.env.MONGO_CONNECTION_STRING
@@ -48,19 +48,21 @@ const initConnection = (opts = {}) => {
   if (initialized) return
   initialized = true
   const mongooseOptions = assignMongooseOptions(opts)
-  mongoose.connect(mongodbUri, mongooseOptions)
+  await mongoose.connect(mongodbUri, mongooseOptions)
   dbConnection = mongoose.connection
   dbConnection.on('error', handleErr)
   dbConnection.on('open', () => { resolveConnection(dbConnection) })
+  dbConnection.on('disconnecting', () => logger.info('shutting down db connection'))
+  dbConnection.on('disconnected', () => logger.info('mongodb connection successfully disconnected.'))
 }
 
-const dbShutdown = cb => {
-  logger.info('Shutting down db connection')
+const dbShutdown = async () => {
   // This may be a sudden termination and not wait for all saves to finish
-  dbConnection.close(err => {
+  try {
+    await dbConnection.close()
+  } catch (err) {
     logger.error(err)
-    mongoose.disconnect(cb)
-  })
+  }
 }
 
 module.exports = {

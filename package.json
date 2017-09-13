@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "description": "",
   "engines": {
-    "node": "^8.1.4"
+    "node": "^8.4.0"
   },
   "homepage": "https://github.com/invisible-tech/mongoose-extras#readme",
   "author": {

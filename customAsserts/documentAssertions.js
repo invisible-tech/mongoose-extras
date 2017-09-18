@@ -12,7 +12,7 @@ const {
   sortBy,
 } = require('lodash/fp')
 
-const { isObjectId } = require('../index.js')
+const { isObjectId } = require('../helpers/mongooseHelper.js')
 
 const prettyJson = obj => JSON.stringify(obj, null, 2)
 const isDefined = negate(isUndefined)

@@ -40,20 +40,17 @@ const defaultOptions = {
 const assignMongooseOptions = opts => Object.assign(defaultOptions, opts)
 
 let initialized = false
-const initConnection = async (opts = {}) => {
-  const mongodbUri = (process.env.NODE_ENV === 'test')
-    ? process.env.MONGO_TEST_CONNECTION_STRING
-    : process.env.MONGO_CONNECTION_STRING
+const initConnection = (mongodbUri, opts = {}) => {
   if (! mongodbUri) throw new Error(`mongodbUri '${mongodbUri}' is invalid`)
   if (initialized) return
   initialized = true
   const mongooseOptions = assignMongooseOptions(opts)
-  await mongoose.connect(mongodbUri, mongooseOptions)
-  dbConnection = mongoose.connection
-  dbConnection.on('error', handleErr)
-  dbConnection.on('open', () => { resolveConnection(dbConnection) })
-  dbConnection.on('disconnecting', () => logger.info('shutting down db connection'))
-  dbConnection.on('disconnected', () => logger.info('mongodb connection successfully disconnected.'))
+  mongoose.connect(mongodbUri, mongooseOptions)
+  dbConnection = () => mongoose.connection
+  dbConnection().on('error', handleErr)
+  dbConnection().on('open', () => { resolveConnection(dbConnection) })
+  dbConnection().on('disconnecting', () => logger.info('shutting down db connection'))
+  dbConnection().on('disconnected', () => logger.info('mongodb connection successfully disconnected.'))
 }
 
 const dbShutdown = async () => {

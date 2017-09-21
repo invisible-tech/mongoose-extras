@@ -12,8 +12,6 @@ const logger = require('@invisible/logger')
 // use native promises
 mongoose.Promise = global.Promise
 
-let dbConnection
-
 const handleErr = err => {
   const isConnRefused = flow(get('message'), startsWith('connect ECONNREFUSED'))
   if (isConnRefused(err)) throw err
@@ -46,24 +44,22 @@ const initConnection = (mongodbUri, opts = {}) => {
   initialized = true
   const mongooseOptions = assignMongooseOptions(opts)
   mongoose.connect(mongodbUri, mongooseOptions)
-  dbConnection = () => mongoose.connection
-  dbConnection().on('error', handleErr)
-  dbConnection().on('open', () => { resolveConnection(dbConnection) })
-  dbConnection().on('disconnecting', () => logger.info('shutting down db connection'))
-  dbConnection().on('disconnected', () => logger.info('mongodb connection successfully disconnected.'))
+  mongoose.connection.on('error', handleErr)
+  mongoose.connection.on('open', () => { resolveConnection(mongoose.connection) })
+  mongoose.connection.on('disconnecting', () => logger.info('shutting down db connection'))
+  mongoose.connection.on('disconnected', () => logger.info('mongodb connection successfully disconnected.'))
 }
 
 const dbShutdown = async () => {
   // This may be a sudden termination and not wait for all saves to finish
   try {
-    await dbConnection().close()
+    await mongoose.connection.close()
   } catch (err) {
     logger.error(err)
   }
 }
 
 module.exports = {
-  dbConnection,
   dbShutdown,
   getConnection,
   initConnection,

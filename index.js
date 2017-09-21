@@ -33,7 +33,6 @@ const {
 } = require('./helpers/mongooseHelper.js')
 
 const {
-  dbConnection,
   dbShutdown,
   getConnection,
   initConnection,
@@ -54,7 +53,6 @@ module.exports = {
   assertThrows,
   clearCollections,
   clearIndexes,
-  dbConnection,
   dbShutdown,
   getConnection,
   getId,

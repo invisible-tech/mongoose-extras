@@ -1,5 +1,7 @@
 'use strict'
 
+/* eslint-disable no-console */
+
 const mongoose = require('mongoose')
 const {
   flow,
@@ -7,15 +9,13 @@ const {
   startsWith,
 } = require('lodash/fp')
 
-const logger = require('@invisible/logger')
-
 // use native promises
 mongoose.Promise = global.Promise
 
 const handleErr = err => {
   const isConnRefused = flow(get('message'), startsWith('connect ECONNREFUSED'))
   if (isConnRefused(err)) throw err
-  else logger.error(err)
+  else console.log(`ERROR: ${err}`)
 }
 
 let resolveConnection // eslint-disable-line one-var
@@ -46,8 +46,8 @@ const initConnection = (mongodbUri, opts = {}) => {
   mongoose.connect(mongodbUri, mongooseOptions)
   mongoose.connection.on('error', handleErr)
   mongoose.connection.on('open', () => { resolveConnection(mongoose.connection) })
-  mongoose.connection.on('disconnecting', () => logger.info('shutting down db connection'))
-  mongoose.connection.on('disconnected', () => logger.info('mongodb connection successfully disconnected.'))
+  mongoose.connection.on('disconnecting', () => console.log('INFO: shutting down db connection'))
+  mongoose.connection.on('disconnected', () => console.log('INFO: mongodb connection successfully disconnected.'))
 }
 
 const dbShutdown = async () => {
@@ -55,7 +55,7 @@ const dbShutdown = async () => {
   try {
     await mongoose.connection.close()
   } catch (err) {
-    logger.error(err)
+    console.log(`ERROR: ${err}`)
   }
 }
 

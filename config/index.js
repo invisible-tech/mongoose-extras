@@ -56,7 +56,7 @@ const initConnection = (mongodbUri, opts = {}) => {
 const dbShutdown = async () => {
   // This may be a sudden termination and not wait for all saves to finish
   try {
-    await dbConnection.close()
+    await dbConnection().close()
   } catch (err) {
     logger.error(err)
   }

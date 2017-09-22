@@ -1949,19 +1949,19 @@ moment@^2.18.1:
   version "2.18.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.18.1.tgz#c36193dd3ce1c2eed2adb7c802dbbc77a81b1c0f"
 
-mongodb-core@2.1.11:
-  version "2.1.11"
-  resolved "https://registry.yarnpkg.com/mongodb-core/-/mongodb-core-2.1.11.tgz#1c38776ceb174997a99c28860eed9028da9b3e1a"
+mongodb-core@2.1.15:
+  version "2.1.15"
+  resolved "https://registry.yarnpkg.com/mongodb-core/-/mongodb-core-2.1.15.tgz#841f53b87ffff4c7458189c35c8ae827e1169764"
   dependencies:
     bson "~1.0.4"
     require_optional "~1.0.0"
 
-mongodb@2.2.27:
-  version "2.2.27"
-  resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-2.2.27.tgz#34122034db66d983bcf6ab5adb26a24a70fef6e6"
+mongodb@2.2.31:
+  version "2.2.31"
+  resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-2.2.31.tgz#1940445c661e19217bb3bf8245d9854aaef548db"
   dependencies:
     es6-promise "3.2.1"
-    mongodb-core "2.1.11"
+    mongodb-core "2.1.15"
     readable-stream "2.2.7"
 
 mongoose-unique-validator@^1.0.5:
@@ -1971,15 +1971,15 @@ mongoose-unique-validator@^1.0.5:
     lodash.foreach "^4.1.0"
     lodash.get "^4.0.2"
 
-mongoose@^4.11.5:
-  version "4.11.5"
-  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-4.11.5.tgz#59e4a1d84dcd36cc51f3e639b771cb8359f539aa"
+mongoose@^4.11.11:
+  version "4.11.11"
+  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-4.11.11.tgz#ae9baf860241e086c90b226fdda52f1afddc6a7b"
   dependencies:
     async "2.1.4"
     bson "~1.0.4"
     hooks-fixed "2.0.0"
     kareem "1.5.0"
-    mongodb "2.2.27"
+    mongodb "2.2.31"
     mpath "0.3.0"
     mpromise "0.5.5"
     mquery "2.3.1"

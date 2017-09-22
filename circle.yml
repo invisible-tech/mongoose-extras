@@ -13,8 +13,8 @@ machine:
     NODE_ENV: test
     PORT: 3000
 
-    MONGO_CONNECTION_STRING: mongodb://localhost:27017/dummy
-    MONGO_TEST_CONNECTION_STRING: mongodb://localhost:27017/dummy-test
+    DB_CONNECTION_STRING: mongodb://localhost:27017/dummy
+    DB_TEST_CONNECTION_STRING: mongodb://localhost:27017/dummy-test
 
   node:
     version: "8.4.0"

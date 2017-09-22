@@ -1,5 +1,7 @@
 'use strict'
 
+const mongoose = require('mongoose')
+
 const {
   assertNotSameObjectId,
   assertSameDocument,
@@ -7,6 +9,7 @@ const {
   assertSameDocumentIdArray,
   assertSameObjectId,
   assertSameObjectIdArray,
+  assertThrows,
 } = require('./customAsserts/documentAssertions.js')
 
 const {
@@ -30,11 +33,10 @@ const {
 } = require('./helpers/mongooseHelper.js')
 
 const {
-  dbConnection,
   dbShutdown,
   getConnection,
   initConnection,
-} = require('./config')
+} = require('./config/index.js')
 
 module.exports = {
   addIndexes,
@@ -48,9 +50,9 @@ module.exports = {
   assertSameObjectId,
   assertSameObjectIdArray,
   assertInstance,
+  assertThrows,
   clearCollections,
   clearIndexes,
-  dbConnection,
   dbShutdown,
   getConnection,
   getId,
@@ -59,6 +61,7 @@ module.exports = {
   initConnection,
   isObjectId,
   isSameObjectId,
+  mongoose,
   pickIds,
   upsertModel,
 }

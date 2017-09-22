@@ -1,5 +1,7 @@
 'use strict'
 
+/* eslint-disable no-console */
+
 const mongoose = require('mongoose')
 const {
   flow,
@@ -7,17 +9,13 @@ const {
   startsWith,
 } = require('lodash/fp')
 
-const logger = require('@invisible/logger')
-
 // use native promises
 mongoose.Promise = global.Promise
-
-let dbConnection
 
 const handleErr = err => {
   const isConnRefused = flow(get('message'), startsWith('connect ECONNREFUSED'))
   if (isConnRefused(err)) throw err
-  else logger.error(err)
+  else console.log(`ERROR: ${err}`)
 }
 
 let resolveConnection // eslint-disable-line one-var
@@ -40,33 +38,28 @@ const defaultOptions = {
 const assignMongooseOptions = opts => Object.assign(defaultOptions, opts)
 
 let initialized = false
-const initConnection = async (opts = {}) => {
-  const mongodbUri = (process.env.NODE_ENV === 'test')
-    ? process.env.MONGO_TEST_CONNECTION_STRING
-    : process.env.MONGO_CONNECTION_STRING
+const initConnection = (mongodbUri, opts = {}) => {
   if (! mongodbUri) throw new Error(`mongodbUri '${mongodbUri}' is invalid`)
   if (initialized) return
   initialized = true
   const mongooseOptions = assignMongooseOptions(opts)
-  await mongoose.connect(mongodbUri, mongooseOptions)
-  dbConnection = mongoose.connection
-  dbConnection.on('error', handleErr)
-  dbConnection.on('open', () => { resolveConnection(dbConnection) })
-  dbConnection.on('disconnecting', () => logger.info('shutting down db connection'))
-  dbConnection.on('disconnected', () => logger.info('mongodb connection successfully disconnected.'))
+  mongoose.connect(mongodbUri, mongooseOptions)
+  mongoose.connection.on('error', handleErr)
+  mongoose.connection.on('open', () => { resolveConnection(mongoose.connection) })
+  mongoose.connection.on('disconnecting', () => console.log('INFO: shutting down db connection'))
+  mongoose.connection.on('disconnected', () => console.log('INFO: mongodb connection successfully disconnected.'))
 }
 
 const dbShutdown = async () => {
   // This may be a sudden termination and not wait for all saves to finish
   try {
-    await dbConnection.close()
+    await mongoose.connection.close()
   } catch (err) {
-    logger.error(err)
+    console.log(`ERROR: ${err}`)
   }
 }
 
 module.exports = {
-  dbConnection,
   dbShutdown,
   getConnection,
   initConnection,

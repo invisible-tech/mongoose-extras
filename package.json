@@ -1,7 +1,7 @@
 {
-  "name": "@invisible/mongoose-extras",
+  "name": "@invisible/mongoose",
   "license": "MIT",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "engines": {
     "node": "^8.4.0"
@@ -20,10 +20,9 @@
     "test": "NODE_ENV=test nyc mocha $(find test -name '*.spec.js')"
   },
   "dependencies": {
-    "@invisible/logger": "^0.0.3",
     "common-tags": "^1.4.0",
     "lodash": "^4.17.4",
-    "mongoose": "^4.11.5",
+    "mongoose": "^4.11.11",
     "mongoose-unique-validator": "^1.0.5",
     "retry": "^0.10.1"
   },

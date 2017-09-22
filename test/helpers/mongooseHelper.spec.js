@@ -2,7 +2,6 @@
 
 const assert = require('assert')
 const mongoose = require('mongoose')
-
 const {
   forEach,
   get,
@@ -20,7 +19,7 @@ const {
   isObjectId,
   isSameObjectId,
   upsertModel,
-} = require('../../helpers/mongooseHelper')
+} = require('../../helpers/mongooseHelper.js')
 
 const { Schema } = mongoose
 const { ObjectId } = mongoose.Types

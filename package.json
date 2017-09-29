@@ -1,7 +1,7 @@
 {
   "name": "@invisible/mongoose",
   "license": "MIT",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
   "engines": {
     "node": "^8.5.0"
@@ -17,7 +17,8 @@
     "coverage": "nyc report --reporter=lcov --reporter=html --reporter=text-summary --reporter=text",
     "lint": "eslint . --ignore-path .gitignore",
     "pretest": "yarn run lint",
-    "test": "NODE_ENV=test nyc mocha $(find test -name '*.spec.js')"
+    "test": "NODE_ENV=test nyc mocha $(find test -name '*.spec.js')",
+    "posttest": "assert-version-bump && nsp check"
   },
   "dependencies": {
     "common-tags": "^1.4.0",
@@ -35,8 +36,10 @@
   },
   "devDependencies": {
     "@invisible/eslint-config": "^1.0.0",
+    "@invisible/publish": "^1.1.1",
     "eslint": "^4.7.2",
     "mocha": "^3.4.2",
+    "nsp": "^2.8.1",
     "nyc": "^11.1.0"
   }
 }

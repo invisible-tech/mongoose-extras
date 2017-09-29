@@ -1,0 +1,8 @@
+{
+  "exceptions": [
+    // mquery and mongoose use fixed dependency versions so it might take a while to
+    // propagate the fix -- overriding for now
+    "https://nodesecurity.io/advisories/534"
+
+  ]
+}

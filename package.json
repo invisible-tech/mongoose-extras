@@ -23,8 +23,8 @@
   "dependencies": {
     "common-tags": "^1.4.0",
     "lodash": "^4.17.4",
-    "mongoose": "^4.11.11",
-    "mongoose-unique-validator": "^1.0.5",
+    "mongoose": "^4.12.0",
+    "mongoose-unique-validator": "^1.0.6",
     "retry": "^0.10.1"
   },
   "repository": {
@@ -35,11 +35,11 @@
     "url": "https://github.com/invisible-tech/mongoose-extras/issues"
   },
   "devDependencies": {
-    "@invisible/eslint-config": "^1.0.0",
-    "@invisible/publish": "^1.1.6",
-    "eslint": "^4.7.2",
-    "mocha": "^3.4.2",
+    "@invisible/eslint-config": "^1.1.4",
+    "@invisible/publish": "^1.1.8",
+    "eslint": "^4.8.0",
+    "mocha": "^4.0.0",
     "nsp": "^2.8.1",
-    "nyc": "^11.1.0"
+    "nyc": "^11.2.1"
   }
 }

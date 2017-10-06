@@ -1,0 +1,22 @@
+# Node shiz
+node_modules
+
+# npm shiz
+package-lock.json
+
+# Each project can have an ignore subdirectory
+ignore
+
+# docs
+docs
+
+# eslint cache
+.eslint-cache
+.eslintcache
+
+# nyc shiz
+.nyc_output
+coverage
+
+# .env
+.env

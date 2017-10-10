@@ -2,7 +2,7 @@
 
 [![CircleCI](https://circleci.com/gh/invisible-tech/mongoose-extras/tree/master.svg?style=svg)](https://circleci.com/gh/invisible-tech/mongoose-extras/tree/master)
 
-This module wraps `mongoose` and expose auxiliary methods.
+This module wraps `mongoose` and exposes auxiliary methods.
 
 ## Install
 
@@ -26,10 +26,6 @@ const { Schema } = mongoose // you can use mongoose normally.
 const schema = new Schema({})
 const Model = mongoose.model('Model', schema)
 ```
-
-## For more information
-
-- Documentation is available at [@invisible/mongoose](https://invisible-tech.github.io/mongoose-extras/)!
 
 ## License
 MIT

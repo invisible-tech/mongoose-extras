@@ -84,7 +84,7 @@ const addUniqueIndexes = ({ schema, uniqueIndexes }) => {
  * @return {undefined} - Mutates the schema directly
  */
 const addVirtualGetters = ({ schema, virtuals }) => {
-  const addVirtualGetter = (v, k) => schema.virtual(k).get(function() { return get(v)(this) })
+  const addVirtualGetter = (v, k) => schema.virtual(k).get(function () { return get(v)(this) })
   forEachValueKey(addVirtualGetter)(virtuals) // eslint-disable-line lodash-fp/no-unused-result
 }
 

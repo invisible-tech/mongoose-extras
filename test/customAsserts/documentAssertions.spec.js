@@ -15,7 +15,7 @@ const {
 
 const { ObjectId } = mongoose.Types
 
-const toObject = function() {
+const toObject = function () {
   return this
 }
 
@@ -37,7 +37,8 @@ describe('documentAssertions', () => {
       const actual = [{ _id: new ObjectId(), toObject }]
       assertThrows(
         () => assertSameDocument(expected, actual, 'msg'),
-        'assertSameDocument: 2nd argument is not a Mongoose Document')
+        'assertSameDocument: 2nd argument is not a Mongoose Document'
+      )
     })
   })
 
@@ -64,7 +65,8 @@ describe('documentAssertions', () => {
       const actual = [{ _id: new ObjectId(), toObject }]
       assertThrows(
         () => assertSameDocumentArray(expected, actual),
-        'assertSameDocumentArray: 1st argument is not an Array.')
+        'assertSameDocumentArray: 1st argument is not an Array.'
+      )
     })
   })
 
@@ -92,7 +94,8 @@ describe('documentAssertions', () => {
       const actual = [{ _id: new ObjectId(), toObject }]
       assertThrows(
         () => assertSameDocumentIdArray(expected, actual),
-        'assertSameDocumentIdArray: 1st argument is not an Array.')
+        'assertSameDocumentIdArray: 1st argument is not an Array.'
+      )
     })
   })
 
@@ -117,7 +120,8 @@ describe('documentAssertions', () => {
       const actual = [new ObjectId()]
       assertThrows(
         () => assertSameObjectIdArray(expected, actual),
-        'assertSameObjectIdArray: First argument is not an Array.')
+        'assertSameObjectIdArray: First argument is not an Array.'
+      )
     })
   })
 

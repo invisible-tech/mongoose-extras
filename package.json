@@ -14,9 +14,8 @@
   },
   "main": "index.js",
   "scripts": {
-    "builddoc": "./node_modules/.bin/jsdoc -c ./.jsdoc.json",
     "coverage": "nyc report --reporter=lcov --reporter=html --reporter=text-summary --reporter=text",
-    "lint": "eslint .",
+    "lint": "eslint . --ignore-path .gitignore",
     "pretest": "yarn run lint",
     "test": "NODE_ENV=test nyc mocha $(find test -name '*.spec.js')",
     "posttest": "assert-version-bump && nsp check"

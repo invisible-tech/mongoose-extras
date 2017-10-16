@@ -47,7 +47,18 @@ const clearAllCollections = async () => {
   await Promise.all(map(deleteCollection)(collections))
 }
 
+/**
+ * Clear all collections.
+ * @method clearCollections
+ * @return {undefined}
+ */
 const clearCollections = () => retryPromise(clearAllCollections)
+
+/**
+ * Clear all Indexes
+ * @method clearIndexes
+ * @return {undefined}
+ */
 const clearIndexes = () => retryPromise(clearAllIndexes)
 
 module.exports = {

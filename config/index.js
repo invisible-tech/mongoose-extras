@@ -18,6 +18,11 @@ const handleErr = err => {
   else console.log(`ERROR: ${err}`)
 }
 
+/**
+ * Gets the Mongoose connection to the database.
+ * @method getConnection
+ * @return {undefined}
+ */
 let resolveConnection // eslint-disable-line one-var
 const connectionPromise = new Promise(resolve => {
   resolveConnection = resolve
@@ -37,6 +42,13 @@ const defaultOptions = {
 }
 const assignMongooseOptions = opts => Object.assign(defaultOptions, opts)
 
+/**
+ * Initialize a Mongoose connection to the database. (see mongoose.connect('mongodb://localhost/test')).
+ * @method initConnection
+ * @param {String} mongodbUri - the Mongoose connection uri.
+ * @param {Object} opts - An object with connection options. (see http://mongoosejs.com/docs/connections.html)
+ * @return {undefined}
+ */
 let initialized = false
 const initConnection = (mongodbUri, opts = {}) => {
   if (! mongodbUri) throw new Error(`mongodbUri '${mongodbUri}' is invalid`)
@@ -50,6 +62,11 @@ const initConnection = (mongodbUri, opts = {}) => {
   mongoose.connection.on('disconnected', () => console.log('INFO: mongodb connection successfully disconnected.'))
 }
 
+/**
+ * Closes the Mongoose connection.
+ * @method dbShutdown
+ * @return {undefined}
+ */
 const dbShutdown = async () => {
   // This may be a sudden termination and not wait for all saves to finish
   try {

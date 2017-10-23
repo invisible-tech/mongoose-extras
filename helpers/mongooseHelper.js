@@ -12,6 +12,8 @@ const {
   mapValues,
 } = require('lodash/fp')
 
+const ERROR_NO_OBJECT_ID = 'Argument is not a mongoose instance'
+
 const forEachValueKey = forEach.convert({ cap: false })
 
 /**
@@ -46,6 +48,14 @@ const isObjectId = a => (a instanceof mongoose.Types.ObjectId)
  * @return {Array} - An array of strings with the Ids.
  */
 const pickIds = mapValues(v => getId(v))
+
+const getObjectIdFrom = instance => {
+  if (isObjectId(instance)) return instance
+  if (isObjectId(getId(instance))) return getId(instance)
+  throw Error(stripIndents`
+    getObjectIdFrom: ${ERROR_NO_OBJECT_ID}
+    ${JSON.stringify(instance)}`)
+}
 
 /**
  * A boolean representing if the objects given have the same Mongoose Object Id.
@@ -174,6 +184,7 @@ module.exports = {
   assertInstance,
   getId,
   getIds,
+  getObjectIdFrom,
   hookAllMethods,
   isObjectId,
   isSameObjectId,

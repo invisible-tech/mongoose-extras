@@ -15,6 +15,7 @@ const {
   addUniqueIndexes,
   addVirtualGetters,
   assertInstance,
+  getObjectIdFrom,
   pickIds,
   isObjectId,
   isSameObjectId,
@@ -31,6 +32,24 @@ describe('mongooseHelper', () => {
   const modelSchema = new Schema({})
 
   const DummyModel = mongoose.model('DummyModel', modelSchema)
+
+  describe('getObjectIdFrom', () => {
+    it('should work for object', async () => {
+      const obj = new DummyModel()
+
+      assert.strictEqual(obj._id, getObjectIdFrom(obj))
+    })
+
+    it('should work for id', async () => {
+      const obj = new DummyModel()
+
+      assert.strictEqual(obj._id, getObjectIdFrom(obj._id))
+    })
+
+    it('should throw otherwise', async () => {
+      assert.throws(() => getObjectIdFrom('hello'))
+    })
+  })
 
   describe('isSameObjectId', () => {
     const a = new ObjectId()

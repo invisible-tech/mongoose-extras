@@ -140,7 +140,7 @@ describe('mongooseHelper', () => {
     it('should add virtual getters', () => {
       const virtuals = {
         subDoc: 'c.d',
-        alternateB: 'b',
+        alternateB: function () { return this.b }, // eslint-disable-line object-shorthand
       }
 
       addVirtualGetters({ schema: dummySchema, virtuals })

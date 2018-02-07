@@ -6,6 +6,9 @@ const uniqueValidator = require('mongoose-unique-validator')
 
 const { stripIndents } = require('common-tags')
 const {
+  bind,
+  isFunction,
+  isString,
   forEach,
   get,
   map,
@@ -124,15 +127,20 @@ const addUniqueIndexes = ({ schema, uniqueIndexes }) => {
  * @method addVirtualGetters
  * @param {Schema} options.schema - The Schema to which we are adding virtuals
  * @param {Object} options.virtuals - An object of key value pairs,
- *   where the key is the virtual we are setting, and the value is the path to a sub-document
+ *   where the key is the virtual we are setting, and the value is the getter function
  *   Example: const virtuals = {
  *     bot: 'raw.is_bot',
- *     deleted: 'raw.deleted',
+ *     deleted: function() { return this.deleted },
+ *     fullName: function() { return `${this.name.first} ${this.name.last}` },
  *   }
  * @return {undefined} - Mutates the schema directly
  */
 const addVirtualGetters = ({ schema, virtuals }) => {
-  const addVirtualGetter = (v, k) => schema.virtual(k).get(function () { return get(v)(this) })
+  const addVirtualGetter = (v, k) => schema.virtual(k).get(function () {
+    if (isFunction(v)) return bind(v)(this)()
+    if (isString(v)) return get(v)(this)
+    throw Error(`The ${k} value should be a function or a string`)
+  })
   forEachValueKey(addVirtualGetter)(virtuals) // eslint-disable-line lodash-fp/no-unused-result
 }
 

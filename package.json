@@ -1,7 +1,7 @@
 {
   "name": "@invisible/mongoose",
   "license": "MIT",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "",
   "engines": {
     "node": "^8.5.0"

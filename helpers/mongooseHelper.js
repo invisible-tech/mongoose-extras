@@ -1,8 +1,8 @@
 'use strict'
 
 const assert = require('assert')
-const mongoose = require('mongoose')
 const uniqueValidator = require('mongoose-unique-validator')
+const mongoose = require('mongoose')
 
 const { stripIndents } = require('common-tags')
 const {
@@ -184,6 +184,14 @@ const upsertModel = ({ name, schema }) => {
   }
 }
 
+const safeObjectId = (x = '') => {
+  try {
+    return new mongoose.Types.ObjectId(x)
+  } catch (err) {
+    return undefined
+  }
+}
+
 module.exports = {
   addIndexes,
   addUniqueIndexes,
@@ -197,5 +205,6 @@ module.exports = {
   isObjectId,
   isSameObjectId,
   pickIds,
+  safeObjectId,
   upsertModel,
 }

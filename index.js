@@ -29,6 +29,7 @@ const {
   isObjectId,
   isSameObjectId,
   pickIds,
+  safeObjectId,
   upsertModel,
 } = require('./helpers/mongooseHelper.js')
 
@@ -43,13 +44,13 @@ module.exports = {
   addUniqueIndexes,
   addVirtualGetters,
   applyAllHooks,
+  assertInstance,
   assertNotSameObjectId,
   assertSameDocument,
   assertSameDocumentArray,
   assertSameDocumentIdArray,
   assertSameObjectId,
   assertSameObjectIdArray,
-  assertInstance,
   assertThrows,
   clearCollections,
   clearIndexes,
@@ -63,5 +64,6 @@ module.exports = {
   isSameObjectId,
   mongoose,
   pickIds,
+  safeObjectId,
   upsertModel,
 }

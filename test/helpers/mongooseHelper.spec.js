@@ -10,6 +10,7 @@ const {
   map,
 } = require('lodash/fp')
 
+const mongooseHelper = require('../../helpers/mongooseHelper.js')
 const {
   addIndexes,
   addUniqueIndexes,
@@ -185,6 +186,21 @@ describe('mongooseHelper', () => {
       assert.strictEqual(modelName, name)
       assert(mongoose.model(modelName)) // this throws if the model doesn't exist
       assert.deepStrictEqual(model, model2)
+    })
+  })
+
+  describe('safeObjectId', () => {
+    const { safeObjectId } = mongooseHelper
+    it('should not throw with invalid input', () => {
+      assert(safeObjectId('') === undefined)
+      assert(safeObjectId('aaaaaa') === undefined)
+      assert(safeObjectId(new Date()) === undefined)
+    })
+
+    it('should return valid object id', () => {
+      const expected = new mongoose.Types.ObjectId()
+      const actual = safeObjectId(expected)
+      isSameObjectId(actual, expected)
     })
   })
 })

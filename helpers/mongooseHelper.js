@@ -87,7 +87,7 @@ function assertInstance(instance, model) {
   const modelName = get('modelName')(model)
   try {
     mongoose.model(modelName)
-  } catch (e) {
+  } catch (err) {
     throw Error(`no such model as ${modelName}`)
   }
   const errMsg = stripIndents`
@@ -178,7 +178,7 @@ const upsertModel = ({ name, schema }) => {
   assert(name, 'Model name not given')
   try {
     return mongoose.model(name)
-  } catch (e) {
+  } catch (err) {
     assert(schema, `Model schema not given for ${name}`)
     return mongoose.model(name, schema)
   }

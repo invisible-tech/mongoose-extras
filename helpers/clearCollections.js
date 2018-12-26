@@ -1,7 +1,8 @@
 'use strict'
 
-const mongoose = require('mongoose')
 const { promisify } = require('util')
+
+const mongoose = require('mongoose')
 const retry = require('retry')
 const {
   flow,
@@ -28,7 +29,7 @@ const retryPromise = fn => {
         if (operation.retry(err)) return
         rej(err)
         console.err(Error('Connection timed out.')) // eslint-disable-line no-console
-        process.exit(1)
+        process.exit(1) // eslint-disable-line unicorn/no-process-exit
       }
       fn().then(res).catch(onError)
     })

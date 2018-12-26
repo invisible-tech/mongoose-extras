@@ -12,7 +12,7 @@ const {
   sortBy,
 } = require('lodash/fp')
 
-const { isObjectId } = require('../helpers/mongooseHelper.js')
+const { isObjectId } = require('../helpers/mongooseHelper')
 
 const prettyJson = obj => JSON.stringify(obj, null, 2)
 const isDefined = negate(isUndefined)
@@ -71,13 +71,13 @@ const assertSameDocument = (actual, expected, msg) => {
  * @return {undefined} - Throws if assertions fail
  */
 function assertSameObjectIdArray(actual, expected, msg) {
-  assert(actual instanceof Array, 'assertSameObjectIdArray: First argument is not an Array.')
-  assert(expected instanceof Array, 'assertSameObjectIdArray: Second argument is not an Array.')
+  assert(Array.isArray(actual), 'assertSameObjectIdArray: First argument is not an Array.')
+  assert(Array.isArray(expected), 'assertSameObjectIdArray: Second argument is not an Array.')
   assert(size(actual) > 0 || size(expected) > 0, 'assertSameObjectIdArray: Received two empty Arrays.')
   assert.strictEqual(size(actual), size(expected), 'assertSameObjectIdArray: arrays different sizes')
   const parseIds = flow(map(stringifyObjectId), sortBy(identity))
-  try { parseIds(actual) } catch (e) { throw Error(`assertSameObjectIdArray 1st argument: ${e.message}`) }
-  try { parseIds(expected) } catch (e) { throw Error(`assertSameObjectIdArray 2nd argument: ${e.message}`) }
+  try { parseIds(actual) } catch (err) { throw Error(`assertSameObjectIdArray 1st argument: ${err.message}`) }
+  try { parseIds(expected) } catch (err) { throw Error(`assertSameObjectIdArray 2nd argument: ${err.message}`) }
   assert.deepStrictEqual(parseIds(actual), parseIds(expected), msg)
 }
 
@@ -90,8 +90,8 @@ function assertSameObjectIdArray(actual, expected, msg) {
  * @return {undefined} - Throws if assertions fail
  */
 const assertSameDocumentIdArray = (actual, expected, msg) => {
-  assert(actual instanceof Array, 'assertSameDocumentIdArray: 1st argument is not an Array.')
-  assert(expected instanceof Array, 'assertSameDocumentIdArray: 2nd argument is not an Array.')
+  assert(Array.isArray(actual), 'assertSameDocumentIdArray: 1st argument is not an Array.')
+  assert(Array.isArray(expected), 'assertSameDocumentIdArray: 2nd argument is not an Array.')
   assert(size(actual) > 0 || size(expected) > 0, 'assertSameDocumentIdArray: Received two empty Arrays.')
   assert.strictEqual(size(actual), size(expected), 'assertSameDocumentIdArray: arrays different sizes')
   const getIds = map('_id')
@@ -107,8 +107,8 @@ const assertSameDocumentIdArray = (actual, expected, msg) => {
  * @return {undefined} - Throws if assertions fail
  */
 const assertSameDocumentArray = (actual, expected, msg) => {
-  assert(actual instanceof Array, 'assertSameDocumentArray: 1st argument is not an Array.')
-  assert(expected instanceof Array, 'assertSameDocumentArray: 2nd argument is not an Array.')
+  assert(Array.isArray(actual), 'assertSameDocumentArray: 1st argument is not an Array.')
+  assert(Array.isArray(expected), 'assertSameDocumentArray: 2nd argument is not an Array.')
   assert(size(actual) > 0 || size(expected) > 0, 'assertSameDocumentArray: Received two empty Arrays.')
   assert.strictEqual(size(actual), size(expected), 'assertSameDocumentArray: arrays different sizes')
   const actualSorted = sortBy('_id')(actual)

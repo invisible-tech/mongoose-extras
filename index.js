@@ -37,7 +37,7 @@ const {
   dbShutdown,
   getConnection,
   initConnection,
-} = require('./config/index.js')
+} = require('./config')
 
 module.exports = {
   addIndexes,

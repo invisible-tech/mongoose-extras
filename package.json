@@ -1,10 +1,11 @@
 {
   "name": "@invisible/mongoose",
   "license": "MIT",
-  "version": "1.2.0",
-  "description": "",
+  "version": "1.2.1",
+  "description": "Additional functions for working with Mongoose",
   "engines": {
-    "node": "^8.5.0"
+    "node": ">=8.5.0",
+    "npm": ">=6.0.0"
   },
   "homepage": "https://github.com/invisible-tech/mongoose-extras#readme",
   "author": {
@@ -16,14 +17,15 @@
   "scripts": {
     "coverage": "nyc report --reporter=lcov --reporter=html --reporter=text-summary --reporter=text",
     "lint": "eslint . --ignore-path .gitignore",
-    "pretest": "yarn run lint",
+    "lint:fix": "npm run lint -- --fix",
+    "pretest": "npm run lint",
     "test": "NODE_ENV=test nyc mocha $(find test -name '*.spec.js')",
-    "posttest": "assert-version-bump && nsp check"
+    "posttest": "assert-version-bump && assert-changelog-update && npm audit"
   },
   "dependencies": {
-    "common-tags": "^1.4.0",
-    "lodash": "^4.17.4",
-    "mongoose": "^4.12.0",
+    "common-tags": "^1.8.0",
+    "lodash": "^4.17.11",
+    "mongoose": "^4.13.17",
     "mongoose-unique-validator": "^1.0.6",
     "retry": "^0.10.1"
   },
@@ -35,11 +37,15 @@
     "url": "https://github.com/invisible-tech/mongoose-extras/issues"
   },
   "devDependencies": {
-    "@invisible/eslint-config": "^1.1.4",
-    "@invisible/publish": "^1.1.8",
-    "eslint": "^4.8.0",
-    "mocha": "^4.0.0",
-    "nsp": "^2.8.1",
-    "nyc": "^11.2.1"
+    "@invisible/changelog-update": "^1.0.0",
+    "@invisible/eslint-config": "^1.3.8",
+    "@invisible/publish": "^2.0.4",
+    "eslint": "^4.19.1",
+    "mocha": "^4.1.0",
+    "nyc": "^11.9.0"
+  },
+  "changelogUpdate": {
+    "iconEmoji": "raccoon",
+    "slackbotName": "Invisible Mongoose Extras"
   }
 }
